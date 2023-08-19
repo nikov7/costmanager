@@ -153,7 +153,7 @@ function GetReport() {
                     //item.push(<li key={cursor.key}>{val.sum}, {val.category}, {val.description}</li>);
 
                     item.push(
-                        <tr>
+                        <tr key={cursor.key}>
                             <th scope="row">{cursor.key}</th>
                             <td>{val.sum}</td>
                             <td>{val.category}</td>
