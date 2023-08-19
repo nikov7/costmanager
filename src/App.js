@@ -13,27 +13,35 @@ function AddCost() {
     const [year, setYear] = useState('');
 
     const [sumClass, setSumClass] = useState('form-control');
-
+    const [descriptionClass, setDescriptionClass] = useState('form-control');
 
 
     function handleClick() {
-        setLog(`Added: sum:${sum}, category: ${category}, description:${description}, month:${month}, year:${year}`);
-        console.log(`sum:${+sum}, category: ${category}, description:${description}, month:${+month}, year:${+year}`);
-
-        if (+sum === 0) {
-            console.log("Sum is empty!");
-            setSumClass(`form-control is-invalid`);
-            return
+        // Check for missing inputs (sum & description are required)
+        if (sum === '' || description === '') {
+            if (sum === '') {
+                setSumClass(`form-control is-invalid`);
+            }
+            if (description === '') {
+                setDescriptionClass(`form-control is-invalid`);
+            }
+            setLog(`Error: Missing required inputs`);
+            return;
         }
+
+        setLog(`Added: sum:${sum}, category: ${category}, description:${description}`);
+        //console.log(`sum:${+sum}, category: ${category}, description:${description}, month:${+month}, year:${+year}`);
 
         const cost = {
             sum:+sum, category:category, description:description
         }
 
+        // Month and year are optional
         if (month !== '' && year !== '') {
-            console.log("Both month and year are good");
+            //console.log("Both month and year are good");
             cost.month = +month;
             cost.year = +year;
+            setLog(`Added: sum:${sum}, category: ${category}, description:${description}, month:${month}, year:${year}`);
         }
         idb.db.addCost(cost);
     }
@@ -49,6 +57,9 @@ function AddCost() {
                            onChange={e=> {
                                const val = e.target.value.replace(/\D/g, "");
                                setSum(val);
+                               // Will cancel red borders with valid input
+                               if (val !== '')
+                                   setSumClass(`form-control`);
                            }}
                     />
                     <div className="valid-feedback">
@@ -70,9 +81,15 @@ function AddCost() {
                 </div>
                 <div className="mb-3 w-50">
                     <label htmlFor="description" className="form-label">Description:</label>
-                    <input type="text" className="form-control" name="description" id="description"
+                    <input type="text" className={descriptionClass} name="description" id="description"
                            value={description}
-                           onChange={e=> setDescription(e.target.value)}
+                           onChange={e=> {
+                               const val = e.target.value;
+                               setDescription(val);
+                               // Will cancel red borders with valid input
+                               if (val !== '')
+                                   setDescriptionClass(`form-control`);
+                           }}
                     />
                 </div>
                 <div className="mb-3 w-50">
@@ -207,6 +224,7 @@ function GetReport() {
 
 function App() {
 
+    // run only once
     useEffect(() => {
         const init = async function() {
             idb.db = await idb.openDB("costsdb", 1);
