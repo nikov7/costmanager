@@ -16,7 +16,6 @@ function AddCost() {
     const [descriptionClass, setDescriptionClass] = useState('form-control');
 
 
-
     function handleClick() {
         // Check for missing inputs (sum & description are required)
         if (sum === '' || description === '') {
@@ -42,7 +41,7 @@ function AddCost() {
             //console.log("Both month and year are good");
             cost.month = +month;
             cost.year = +year;
-            setLog(`${log}, month:${month}, year:${year}`);
+            setLog(`Added: sum:${sum}, category: ${category}, description:${description}, month:${month}, year:${year}`);
         }
         idb.db.addCost(cost);
     }
@@ -225,6 +224,7 @@ function GetReport() {
 
 function App() {
 
+    // run only once
     useEffect(() => {
         const init = async function() {
             idb.db = await idb.openDB("costsdb", 1);
