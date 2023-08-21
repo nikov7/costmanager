@@ -4,7 +4,7 @@ import {useState} from "react";
 
 import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from "./inputs";
 
-const options = [
+const categoryOptions = [
     {value: 'FOOD', text:'FOOD'},
     {value: 'HEALTH', text:'HEALTH'},
     {value: 'EDUCATION', text:'EDUCATION'},
@@ -13,13 +13,27 @@ const options = [
     {value: 'OTHER', text:'OTHER'}
 ];
 
+let yearOptions = [];
+
+for (let currYear = 2023; currYear >= 1960; currYear--) {
+    yearOptions.push({ value: currYear.toString(), text: currYear.toString() });
+}
+
+let monthOptions = [];
+
+for (let currMonth = 1; currMonth <= 12; currMonth++) {
+    monthOptions.push({ value: currMonth.toString(), text: currMonth.toString() });
+}
+
+
+
 function AddCost() {
     const [sum, setSum] = useState('');
     const [category, setCategory] = useState('FOOD');
     const [description, setDescription] = useState('');
     const [log, setLog] = useState('');
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
+    const [month, setMonth] = useState(1);
+    const [year, setYear] = useState(2023);
 
     const [sumClass, setSumClass] = useState('form-control');
     const [descriptionClass, setDescriptionClass] = useState('form-control');
@@ -57,10 +71,10 @@ function AddCost() {
             <h1 className="display-3 m-2">Add Cost</h1>
             <div className="m-2">
                 <NumberInput labelText="Sum:" htmlName="sum" value={sum} setValue={setSum} nameClass={sumClass} setNameClass={setSumClass}/>
-                <SelectInput labelText="Category:" htmlName="category" value={category} setValue={setCategory} options={options}/>
+                <SelectInput labelText="Category:" htmlName="category" value={category} setValue={setCategory} options={categoryOptions}/>
                 <TextInput labelText="Description:" htmlName="description" value={description} setValue={setDescription} nameClass={descriptionClass} setNameClass={setDescriptionClass}/>
-                <NumberInput labelText="Month:" htmlName="month" value={month} setValue={setMonth}/>
-                <NumberInput labelText="Year:" htmlName="year" value={year} setValue={setYear}/>
+                <SelectInput labelText="Month:" htmlName="month" value={month} setValue={setMonth} options={monthOptions}/>
+                <SelectInput labelText="Year:" htmlName="year" value={year} setValue={setYear} options={yearOptions}/>
                 <ButtonInput buttonText="Add" onClick={handleClick}/>
                 <LogBox value={log}/>
             </div>
