@@ -1,10 +1,9 @@
-import {useContext, useState} from "react";
+import {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import HistogramChart from "./chart";
-import {NotifyContext} from "../App";
 
 /* global idb */
-const costCategories = ["FOOD", "HEALTH", "EDUCATION", "TRAVEL", "HOUSING", "OTHER"]
+// costCategories = ["FOOD", "HEALTH", "EDUCATION", "TRAVEL", "HOUSING", "OTHER"]
 
 function ReportMain() {
 
@@ -17,8 +16,6 @@ function ReportMain() {
     const [items, setItems] = useState([]);
     const [data_for_chart, setDataForChart] = useState([]);
     const [search, setSearch] = useState('');
-
-    const createNotification = useContext(NotifyContext);
 
     function clearReportItems(){
         setItems([])
@@ -86,8 +83,6 @@ function ReportMain() {
                 }
                 else{
                     setSearch(`No Costs yet for Month: ${monthNum} and Year: ${yearNum}, Please add costs!`);
-                    // example notification
-                    createNotification('Error', `No Costs yet for Month: ${monthNum} and Year: ${yearNum}, Please add costs!`);
                 }
 
             }
