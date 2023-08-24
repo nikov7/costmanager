@@ -37,7 +37,6 @@ function ReportMain() {
     }
 
     function handleClick() {
-        console.log(`Month: ${monthNum}, Year: ${yearNum}`);
         let item = [];
         let chartData = [
             { sum: 0, category: 'FOOD' },
