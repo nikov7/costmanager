@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import React from 'react';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell} from 'recharts';
 
 function HistogramChart({data}) {
+    const barColors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#ff3864', '#a4de6c'];
 
     return (
         <div>
@@ -11,7 +12,13 @@ function HistogramChart({data}) {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="sum" fill="#8884d8" />
+                <Bar dataKey="sum" fill="#8884d8" >
+                    {
+                        data.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={barColors[index % 20]} />
+                        ))
+                    }
+                </Bar>
             </BarChart>
         </div>
     );

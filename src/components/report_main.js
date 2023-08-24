@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import HistogramChart from "./chart";
 
 /* global idb */
-// costCategories = ["FOOD", "HEALTH", "EDUCATION", "TRAVEL", "HOUSING", "OTHER"]
 
 function ReportMain() {
 
@@ -69,6 +68,8 @@ function ReportMain() {
                             <td>{val.sum}</td>
                             <td>{val.category}</td>
                             <td>{val.description}</td>
+                            <td>{val.month}</td>
+                            <td>{val.year}</td>
                         </tr>
                     );
                 }
@@ -78,11 +79,10 @@ function ReportMain() {
                 if (item.length) {
                     setSearch(getSummaryTitle());
                     setItems(item);
-                    console.log(chartData)
                     setDataForChart(chartData);
                 }
                 else{
-                    setSearch(`No Costs yet for Month: ${monthNum} and Year: ${yearNum}, Please add costs!`);
+                    setSearch(`No Costs yet for the dates you mentioned`);
                 }
 
             }
@@ -113,7 +113,6 @@ function ReportMain() {
                     />
                 </div>
                 <div className="mb-3">
-                    {/*<AddButton/>*/}
                     <button className="btn btn-primary" onClick={handleClick}>
                         Search
                     </button>
@@ -129,6 +128,8 @@ function ReportMain() {
                             <th scope="col">Sum</th>
                             <th scope="col">Category</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Month</th>
+                            <th scope="col">Year</th>
                         </tr>
                         </thead>
                         <tbody>{items}</tbody>
