@@ -20,10 +20,10 @@ export function NumberInput({labelText, htmlName, value, setValue, nameClass='fo
     );
 }
 
-export function TextInput({labelText, htmlName, value, setValue, nameClass='form-control', setNameClass}) {
+export function TextInput({labelText, htmlName, value, setValue, nameClass='form-control', setNameClass= e=> {}}) {
     return (
         <div className="mb-3 w-50">
-            <label htmlFor={htmlName} className="form-label">{labelText}</label>
+            <label htmlFor={htmlName} className="form-label">{labelText}</label> <br/>
             <input type="text" className={nameClass} name={htmlName} id={htmlName}
                    value={value}
                    onChange={e=> {
@@ -38,16 +38,6 @@ export function TextInput({labelText, htmlName, value, setValue, nameClass='form
             <div className="valid-feedback">
                 Correct
             </div>
-        </div>
-    );
-}
-
-export function ButtonInput({buttonText, onClick}) {
-    return (
-        <div className="mb-3">
-            <button className="btn btn-primary" onClick={onClick}>
-                {buttonText}
-            </button>
         </div>
     );
 }
@@ -69,8 +59,8 @@ export function SelectInput({labelText, htmlName, value, setValue, options}) {
 
 export function LogBox({value}) {
     return (
-        <div className="mb-3 border">
-            <code className="p-1">{value}</code>
+        <div className="log-box">
+            <code className="log-text">{value}</code>
         </div>
     );
 }

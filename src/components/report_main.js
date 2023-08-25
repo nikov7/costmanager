@@ -1,6 +1,9 @@
 import {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import HistogramChart from "./chart";
+import ReportTable from "./table";
+import GenericButton from "./button";
+import {LogBox, TextInput} from "./inputs";
 
 /* global idb */
 
@@ -15,6 +18,8 @@ function ReportMain() {
     const [items, setItems] = useState([]);
     const [data_for_chart, setDataForChart] = useState([]);
     const [search, setSearch] = useState('');
+    const [emptyVal, setEmptyVal] = useState('');
+
 
     function clearReportItems(){
         setItems([])
@@ -63,7 +68,6 @@ function ReportMain() {
                     }
                     item.push(
                         <tr key={cursor.key}>
-                            <th scope="row">{cursor.key}</th>
                             <td>{val.sum}</td>
                             <td>{val.category}</td>
                             <td>{val.description}</td>
@@ -91,48 +95,12 @@ function ReportMain() {
         <div className="border p-10 w-100">
             <h1 className="display-3 m-2">Get Report</h1>
             <div className="m-2">
-                <div className="mb-3 w-50">
-                    <label htmlFor="month" className="form-label">Month:</label>
-                    <input type="text" className="form-control" name="month" id="month"
-                           value={month}
-                           onChange={e=> {
-                               let val = e.target.value.replace(/\D/g, "");
-                               setMonth(val)
-                           }}
-                    />
-                </div>
-                <div className="mb-3 w-50">
-                    <label htmlFor="year" className="form-label">Year:</label>
-                    <input type="text" className="form-control" name="year" id="year"
-                           value={year}
-                           onChange={e=> {
-                               let val = e.target.value.replace(/\D/g, "");
-                               setYear(val)
-                           }}
-                    />
-                </div>
-                <div className="mb-3">
-                    <button className="btn btn-primary" onClick={handleClick}>
-                        Search
-                    </button>
-                </div>
-                <div className="mb-3">
-                    <div className="mb-1">
-                        <p className="font-monospace">{search}</p>
-                    </div>
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Sum</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Month</th>
-                            <th scope="col">Year</th>
-                        </tr>
-                        </thead>
-                        <tbody>{items}</tbody>
-                    </table>
+                <TextInput labelText="Month:" htmlName="month" value={month} setValue={setMonth}/>
+                <TextInput labelText="Year:" htmlName="year" value={year} setValue={setYear}/>
+                <GenericButton onClick={handleClick} buttonText={"Get Report"}/>
+                <div>
+                    <LogBox value={search}/>
+                    <ReportTable table_items={items} />
                     <HistogramChart data={data_for_chart}/>
                 </div>
             </div>
