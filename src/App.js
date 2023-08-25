@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {createContext, useCallback, useEffect, useState} from 'react';
 import AddCost from './components/cost_main';
 import ReportMain from "./components/report_main";
@@ -18,7 +17,7 @@ function App() {
     // run only once
     useEffect(() => {
         const init = async function() {
-            idb.db = await idb.openDB("costsdb", 1);
+            idb.db = await idb.openCostsDB("costsdb", 1);
             console.log(`db:${idb.db}`);
         }
         console.log("Init once.");

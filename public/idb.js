@@ -27,7 +27,7 @@ idb.Database.prototype.addCost = function(cost) {
     });
 };
 
-idb.openDB = function(name, version) {
+idb.openCostsDB = function(name, version) {
     return new Promise((resolve, reject) => {
 
         let request = indexedDB.open(name, version);

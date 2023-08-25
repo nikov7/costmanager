@@ -5,6 +5,7 @@ import {useState, useContext} from "react";
 import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from "./inputs";
 
 import {NotifyContext} from "../App";
+import GenericButton from "./button";
 
 const categoryOptions = [
     {value: 'FOOD', text:'FOOD'},
@@ -86,7 +87,7 @@ function AddCost() {
                     <TextInput labelText="Description:" htmlName="description" value={description} setValue={setDescription} nameClass={descriptionClass} setNameClass={setDescriptionClass}/>
                     <SelectInput labelText="Month:" htmlName="month" value={month} setValue={setMonth} options={monthOptions}/>
                     <SelectInput labelText="Year:" htmlName="year" value={year} setValue={setYear} options={yearOptions}/>
-                    <ButtonInput buttonText="Add" onClick={handleClick}/>
+                    <GenericButton buttonText="Add Cost" onClick={handleClick}/>
                     <LogBox value={log}/>
                 </div>
             </div>
