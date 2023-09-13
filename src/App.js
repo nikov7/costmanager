@@ -1,4 +1,4 @@
-import {createContext, useCallback, useEffect, useState} from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import AddCost from './components/cost_main';
 import ReportMain from "./components/report_main";
 
@@ -6,30 +6,32 @@ import Notifier from "./components/notifier";
 
 /* global idb */
 
-
-export const NotifyContext = createContext((title, text)=>void 0);
+// Create a context for notifications
+export const NotifyContext = createContext((title, text) => void 0);
 
 function App() {
-
+    // State to manage notifications
     const [notifications, setNotifications] = useState([]);
     const [idVal, setIdVal] = useState(0);
 
-    // run only once
+    // Initialize the indexedDB database on the first run
     useEffect(() => {
-        const init = async function() {
+        const init = async function () {
             idb.db = await idb.openCostsDB("costsdb", 1);
-            console.log(`db:${idb.db}`);
+            console.log(`Database: ${idb.db}`);
         }
-        console.log("Init once.");
+        console.log("Initialization (runs once).");
         init();
     }, []);
 
+    // Function to create and add a notification
     const createNotification = (title, text) => {
         console.log(`Adding notification ['${title}', '${text}'], NOTIFICATION_ID: ${idVal}`);
-        setNotifications(prevArr => [...prevArr, {id:idVal, title:title, text:text}]);
+        setNotifications(prevArr => [...prevArr, { id: idVal, title: title, text: text }]);
         setIdVal(prevId => prevId + 1);
     }
 
+    // Callback function to remove a notification
     const notifierCallback = useCallback((id) => {
         setNotifications((currentNotifications) =>
             currentNotifications.filter((item) => item.id !== id)
@@ -38,13 +40,16 @@ function App() {
 
     return (
         <div className="container m-2 d-flex">
-            <Notifier notifications={notifications} notifierCallback={notifierCallback}/>
+            {/* Display notifications */}
+            <Notifier notifications={notifications} notifierCallback={notifierCallback} />
             <NotifyContext.Provider value={createNotification}>
                 <div className="container">
-                    <AddCost/>
+                    {/* Render the AddCost component */}
+                    <AddCost />
                 </div>
                 <div className="container">
-                    <ReportMain/>
+                    {/* Render the ReportMain component */}
+                    <ReportMain />
                 </div>
             </NotifyContext.Provider>
         </div>

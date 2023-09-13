@@ -1,48 +1,59 @@
-import {useState} from "react";
+import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import HistogramChart from "./chart";
 import ReportTable from "./table";
 import GenericButton from "./button";
-import {LogBox, TextInput} from "./inputs";
+import { LogBox, TextInput } from "./inputs";
 
 /* global idb */
 
 function ReportMain() {
-
+    // State variables for selected month and year
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
 
+    // Convert month and year to numeric values
     const monthNum = Number(month);
     const yearNum = Number(year);
 
+    // State variables to store report items and chart data
     const [items, setItems] = useState([]);
     const [data_for_chart, setDataForChart] = useState([]);
+
+    // State variable to display search results
     const [search, setSearch] = useState('');
+
+    // State variable to display a message when there is no data
     const [emptyVal, setEmptyVal] = useState('');
 
-
-    function clearReportItems(){
-        setItems([])
-        setDataForChart([])
+    // Function to clear report items and chart data
+    function clearReportItems() {
+        setItems([]);
+        setDataForChart([]);
     }
 
-    function shouldReportItem(cursor_val){
-        const onlyMonth = cursor_val.month === monthNum && yearNum === 0
-        const onlyYear = cursor_val.year === yearNum && monthNum === 0
-        const emptyQuery = !monthNum && !yearNum
-        const specificQuery = cursor_val.year === yearNum && cursor_val.month === monthNum
-        return onlyYear || onlyMonth || emptyQuery || specificQuery
+    // Function to determine whether an item should be included in the report based on month and year filters
+    function shouldReportItem(cursor_val) {
+        const onlyMonth = cursor_val.month === monthNum && yearNum === 0;
+        const onlyYear = cursor_val.year === yearNum && monthNum === 0;
+        const emptyQuery = !monthNum && !yearNum;
+        const specificQuery = cursor_val.year === yearNum && cursor_val.month === monthNum;
+        return onlyYear || onlyMonth || emptyQuery || specificQuery;
     }
 
-    function getSummaryTitle(){
-        if (!monthNum && !yearNum) return "'Cost Summary' for all history:"
-        if (yearNum && !monthNum) return `'Cost Summary' for Year: ${yearNum}`
-        if (monthNum && !yearNum) return `'Cost Summary' for Month: ${monthNum}`
-        if (monthNum && yearNum) return `'Cost Summary' for Month: ${monthNum} and Year: ${yearNum}`
+    // Function to generate the summary title based on selected month and year
+    function getSummaryTitle() {
+        if (!monthNum && !yearNum) return "'Cost Summary' for all history:";
+        if (yearNum && !monthNum) return `'Cost Summary' for Year: ${yearNum}`;
+        if (monthNum && !yearNum) return `'Cost Summary' for Month: ${monthNum}`;
+        if (monthNum && yearNum) return `'Cost Summary' for Month: ${monthNum} and Year: ${yearNum}`;
     }
 
+    // Function to handle the "Get Report" button click
     function handleClick() {
         let item = [];
+
+        // Initialize chart data with default values
         let chartData = [
             { sum: 0, category: 'FOOD' },
             { sum: 0, category: 'HEALTH' },
@@ -51,21 +62,28 @@ function ReportMain() {
             { sum: 0, category: 'HOUSING' },
             { sum: 0, category: 'OTHER' },
         ];
+
+        // Access the indexedDB object store for reading
         let objectStore = idb.db.getDB().transaction(["costs"], "readonly").objectStore("costs");
         let cursorObject = objectStore.openCursor();
-        clearReportItems()
+
+        // Clear report items and chart data
+        clearReportItems();
+
         cursorObject.onsuccess = (event) => {
             const cursor = event.target.result;
-            console.log(typeof monthNum, typeof yearNum)
+
             if (cursor) {
                 const val = cursor.value;
                 if (shouldReportItem(val)) {
-                    console.log(`Matching : ${val.sum}, key: ${cursor.key}`);
+                    // Update chart data based on category
                     for (const chartItem of chartData) {
                         if (chartItem.category === val.category) {
                             chartItem.sum += val.sum;
                         }
                     }
+
+                    // Create a table row for the report
                     item.push(
                         <tr key={cursor.key}>
                             <td>{val.sum}</td>
@@ -80,32 +98,33 @@ function ReportMain() {
             }
             else {
                 if (item.length) {
+                    // Display search result based on selected month and year
                     setSearch(getSummaryTitle());
                     setItems(item);
                     setDataForChart(chartData);
                 }
-                else{
+                else {
+                    // Display a message when there is no data
                     setSearch(`No Costs yet for the dates you mentioned`);
                 }
-
             }
         };
     }
+
     return (
         <div className="border p-10 w-100">
             <h1 className="display-3 m-2">Get Report</h1>
             <div className="m-2">
-                <TextInput labelText="Month:" htmlName="month" value={month} setValue={setMonth}/>
-                <TextInput labelText="Year:" htmlName="year" value={year} setValue={setYear}/>
-                <GenericButton onClick={handleClick} buttonText={"Get Report"}/>
+                <TextInput labelText="Month:" htmlName="month" value={month} setValue={setMonth} />
+                <TextInput labelText="Year:" htmlName="year" value={year} setValue={setYear} />
+                <GenericButton onClick={handleClick} buttonText={"Get Report"} />
                 <div>
-                    <LogBox value={search}/>
+                    <LogBox value={search} />
                     <ReportTable table_items={items} />
-                    <HistogramChart data={data_for_chart}/>
+                    <HistogramChart data={data_for_chart} />
                 </div>
             </div>
         </div>
-
     );
 }
 

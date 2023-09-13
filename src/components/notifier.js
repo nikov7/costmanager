@@ -1,10 +1,12 @@
-import {useEffect, useRef} from "react";
-import {Toast} from "bootstrap";
+import { useEffect, useRef } from "react";
+import { Toast } from "bootstrap";
 
-function Notifier({notifications, notifierCallback}) {
+// Notifier component displays toast notifications based on the notifications array.
+function Notifier({ notifications, notifierCallback }) {
     return (
-        <div className="toast-container position-absolute m-2" style={{top:0, right:0}}>
-            {notifications.map(n=> {
+        <div className="toast-container position-absolute m-2" style={{ top: 0, right: 0 }}>
+            {/* Map through notifications and render Notification components */}
+            {notifications.map(n => {
                 return (
                     <Notification
                         key={n.id}
@@ -19,7 +21,8 @@ function Notifier({notifications, notifierCallback}) {
     );
 }
 
-function Notification({id, title, text, callBack}) {
+// Notification component displays a single toast notification.
+function Notification({ id, title, text, callBack }) {
     const toastRef = useRef();
 
     const NOTIFY_TIMEOUT = 3000;
@@ -29,10 +32,10 @@ function Notification({id, title, text, callBack}) {
         let toast = Toast.getInstance(myToast);
 
         if (!toast) {
-            toast = new Toast(myToast, {autohide: false});
+            toast = new Toast(myToast, { autohide: false });
             toast.show();
 
-            // can make deletion time a variable and not constant
+            // Set a timeout to hide the notification after NOTIFY_TIMEOUT milliseconds
             setTimeout(() => {
                 toast.hide();
                 callBack(id);
@@ -50,7 +53,6 @@ function Notification({id, title, text, callBack}) {
             </div>
         </div>
     );
-
 }
 
 export default Notifier;
