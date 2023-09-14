@@ -1,8 +1,8 @@
 export function NumberInput({labelText, htmlName, value, setValue, nameClass='form-control', setNameClass}) {
     return (
-        <div className="mb-3 w-50">
-            <label htmlFor={htmlName} className="form-label required">{labelText}</label>
-            <input type="text" className={nameClass} name={htmlName} id={htmlName}
+        <div className='mb-3 w-50'>
+            <label htmlFor={htmlName} className='form-label required'>{labelText}</label>
+            <input type='text' className={nameClass} name={htmlName} id={htmlName}
                    value={value}
                    onChange={e=> {
                        const val = e.target.value.replace(/\D/g, "");
@@ -13,7 +13,7 @@ export function NumberInput({labelText, htmlName, value, setValue, nameClass='fo
                        }
                    }}
             />
-            <div className="valid-feedback">
+            <div className='valid-feedback'>
                 Correct
             </div>
         </div>
@@ -22,9 +22,9 @@ export function NumberInput({labelText, htmlName, value, setValue, nameClass='fo
 
 export function TextInput({labelText, htmlName, value, setValue, nameClass='form-control', setNameClass= e=> {}}) {
     return (
-        <div className="mb-3 w-50">
-            <label htmlFor={htmlName} className="form-label">{labelText}</label> <br/>
-            <input type="text" className={nameClass} name={htmlName} id={htmlName}
+        <div className='mb-3 w-50'>
+            <label htmlFor={htmlName} className='form-label'>{labelText}</label> <br/>
+            <input type='text' className={nameClass} name={htmlName} id={htmlName}
                    value={value}
                    onChange={e=> {
                        const val = e.target.value;
@@ -35,7 +35,7 @@ export function TextInput({labelText, htmlName, value, setValue, nameClass='form
                        }
                    }}
             />
-            <div className="valid-feedback">
+            <div className='valid-feedback'>
                 Correct
             </div>
         </div>
@@ -44,9 +44,9 @@ export function TextInput({labelText, htmlName, value, setValue, nameClass='form
 
 export function SelectInput({labelText, htmlName, value, setValue, options}) {
     return (
-        <div className="mb-3 w-50">
-            <label htmlFor={htmlName} className="form-label">{labelText}</label>
-            <select className="form-select" name={htmlName} id={htmlName}
+        <div className='mb-3 w-50'>
+            <label htmlFor={htmlName} className='form-label'>{labelText}</label>
+            <select className='form-select' name={htmlName} id={htmlName}
                     value={value}
                     onChange={e => setValue(e.target.value)}>
                 {options.map(item => {
@@ -57,10 +57,20 @@ export function SelectInput({labelText, htmlName, value, setValue, options}) {
     );
 }
 
+export function ButtonInput({buttonText, onClick}) {
+    return (
+        <div className='mb-3'>
+            <button className='btn btn-primary' onClick={onClick}>
+                {buttonText}
+            </button>
+        </div>
+    );
+}
+
 export function LogBox({value}) {
     return (
-        <div className="log-box">
-            <code className="log-text">{value}</code>
+        <div className='log-box'>
+            <code className='log-text'>{value}</code>
         </div>
     );
 }

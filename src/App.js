@@ -1,8 +1,7 @@
 import {createContext, useCallback, useEffect, useState} from 'react';
 import AddCost from './components/cost_main';
-import ReportMain from "./components/report_main";
-
-import Notifier from "./components/notifier";
+import ReportMain from './components/report_main';
+import Notifier from './components/notifier';
 
 /* global idb */
 
@@ -17,10 +16,10 @@ function App() {
     // run only once
     useEffect(() => {
         const init = async function() {
-            idb.db = await idb.openCostsDB("costsdb", 1);
+            idb.db = await idb.openCostsDB('costsdb', 1);
             console.log(`db:${idb.db}`);
         }
-        console.log("Init once.");
+        console.log('Init once.');
         init();
     }, []);
 
@@ -37,13 +36,13 @@ function App() {
     }, []);
 
     return (
-        <div className="container m-2 d-flex">
+        <div className='container m-2 d-flex'>
             <Notifier notifications={notifications} notifierCallback={notifierCallback}/>
             <NotifyContext.Provider value={createNotification}>
-                <div className="container">
+                <div className='container'>
                     <AddCost/>
                 </div>
-                <div className="container">
+                <div className='container'>
                     <ReportMain/>
                 </div>
             </NotifyContext.Provider>

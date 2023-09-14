@@ -1,9 +1,8 @@
-import {useState} from "react";
+import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import HistogramChart from "./chart";
-import ReportTable from "./table";
-import GenericButton from "./button";
-import {LogBox, TextInput} from "./inputs";
+import HistogramChart from './chart';
+import ReportTable from './table';
+import {LogBox, TextInput, ButtonInput} from './inputs';
 
 /* global idb */
 
@@ -35,7 +34,7 @@ function ReportMain() {
     }
 
     function getSummaryTitle(){
-        if (!monthNum && !yearNum) return "'Cost Summary' for all history:"
+        if (!monthNum && !yearNum) return `'Cost Summary' for all history:`
         if (yearNum && !monthNum) return `'Cost Summary' for Year: ${yearNum}`
         if (monthNum && !yearNum) return `'Cost Summary' for Month: ${monthNum}`
         if (monthNum && yearNum) return `'Cost Summary' for Month: ${monthNum} and Year: ${yearNum}`
@@ -51,7 +50,7 @@ function ReportMain() {
             { sum: 0, category: 'HOUSING' },
             { sum: 0, category: 'OTHER' },
         ];
-        let objectStore = idb.db.getDB().transaction(["costs"], "readonly").objectStore("costs");
+        let objectStore = idb.db.getDB().transaction(['costs'], 'readonly').objectStore('costs');
         let cursorObject = objectStore.openCursor();
         clearReportItems()
         cursorObject.onsuccess = (event) => {
@@ -92,12 +91,12 @@ function ReportMain() {
         };
     }
     return (
-        <div className="border p-10 w-100">
-            <h1 className="display-3 m-2">Get Report</h1>
-            <div className="m-2">
-                <TextInput labelText="Month:" htmlName="month" value={month} setValue={setMonth}/>
-                <TextInput labelText="Year:" htmlName="year" value={year} setValue={setYear}/>
-                <GenericButton onClick={handleClick} buttonText={"Get Report"}/>
+        <div className='border p-10 w-100'>
+            <h1 className='display-3 m-2'>Get Report</h1>
+            <div className='m-2'>
+                <TextInput labelText='Month:' htmlName='month' value={month} setValue={setMonth}/>
+                <TextInput labelText='Year:' htmlName='year' value={year} setValue={setYear}/>
+                <ButtonInput onClick={handleClick} buttonText={'Get Report'}/>
                 <div>
                     <LogBox value={search}/>
                     <ReportTable table_items={items} />

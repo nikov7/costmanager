@@ -1,9 +1,9 @@
-import {useEffect, useRef} from "react";
-import {Toast} from "bootstrap";
+import {useEffect, useRef} from 'react';
+import {Toast} from 'bootstrap';
 
 function Notifier({notifications, notifierCallback}) {
     return (
-        <div className="toast-container position-absolute m-2" style={{top:0, right:0}}>
+        <div className='toast-container position-absolute m-2' style={{top:0, right:0}}>
             {notifications.map(n=> {
                 return (
                     <Notification
@@ -41,11 +41,11 @@ function Notification({id, title, text, callBack}) {
     }, []);
 
     return (
-        <div className="toast" ref={toastRef}>
-            <div className="toast-header">
-                <strong className="mr-auto">{title}</strong>
+        <div className='toast' ref={toastRef}>
+            <div className='toast-header'>
+                <strong className='mr-auto'>{title}</strong>
             </div>
-            <div className="toast-body">
+            <div className='toast-body'>
                 {text}
             </div>
         </div>

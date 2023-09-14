@@ -10,12 +10,12 @@ function HistogramChart({ data }) {
                 <div>
                 <h2>Cost Summary Chart:</h2>
                 <BarChart width={600} height={400} data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="category" />
+                    <CartesianGrid strokeDasharray='3 3' />
+                    <XAxis dataKey='category' />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="sum" fill="#8884d8">
+                    <Bar dataKey='sum' fill='#8884d8'>
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={barColors[index % 20]} />
                         ))}

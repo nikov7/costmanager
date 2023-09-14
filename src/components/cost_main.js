@@ -1,11 +1,10 @@
-import {useState, useContext} from "react";
+import {useState, useContext} from 'react';
 
 /* global idb */
 
-import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from "./inputs";
+import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from './inputs';
 
-import {NotifyContext} from "../App";
-import GenericButton from "./button";
+import {NotifyContext} from '../App';
 
 const categoryOptions = [
     {value: 'FOOD', text:'FOOD'},
@@ -47,12 +46,12 @@ function AddCost() {
         // Check for missing inputs (sum & description are required)
         if (sum === '' || description === '') {
             if (sum === '') {
-                setSumClass(`form-control is-invalid`);
+                setSumClass('form-control is-invalid');
             }
             if (description === '') {
-                setDescriptionClass(`form-control is-invalid`);
+                setDescriptionClass('form-control is-invalid');
             }
-            setLog(`Error: Missing required inputs`);
+            setLog('Error: Missing required inputs');
             return;
         }
 
@@ -61,16 +60,13 @@ function AddCost() {
             sum:+sum, category:category, description:description
         }
 
-        // Month and year are optional
-        if (month !== '' && year !== '') {
-            //console.log("Both month and year are good");
-            cost.month = +month;
-            cost.year = +year;
-            setLog(`Added: sum:${sum}, category: ${category}, description:${description}, month:${month}, year:${year}`);
-        }
+        cost.month = +month;
+        cost.year = +year;
+        setLog(`Added: sum:${sum}, category: ${category}, description:${description}, month:${month}, year:${year}`);
+
 
         if (createNotification != null) {
-            createNotification("Added", `Sum: ${sum}, Category: ${category}, Description:${description}`);
+            createNotification('Added', `Sum: ${sum}, Category: ${category}, Description:${description}`);
         }
 
         idb.db.addCost(cost);
@@ -78,16 +74,16 @@ function AddCost() {
 
     return (
         <div>
-            <div className="border p-10 w-100 mb-3">
+            <div className='border p-10 w-100 mb-3'>
 
-                <h1 className="display-3 m-2">Add Cost</h1>
-                <div className="m-2">
-                    <NumberInput labelText="Sum:" htmlName="sum" value={sum} setValue={setSum} nameClass={sumClass} setNameClass={setSumClass}/>
-                    <SelectInput labelText="Category:" htmlName="category" value={category} setValue={setCategory} options={categoryOptions}/>
-                    <TextInput labelText="Description:" htmlName="description" value={description} setValue={setDescription} nameClass={descriptionClass} setNameClass={setDescriptionClass}/>
-                    <SelectInput labelText="Month:" htmlName="month" value={month} setValue={setMonth} options={monthOptions}/>
-                    <SelectInput labelText="Year:" htmlName="year" value={year} setValue={setYear} options={yearOptions}/>
-                    <GenericButton buttonText="Add Cost" onClick={handleClick}/>
+                <h1 className='display-3 m-2'>Add Cost</h1>
+                <div className='m-2'>
+                    <NumberInput labelText='Sum:' htmlName='sum' value={sum} setValue={setSum} nameClass={sumClass} setNameClass={setSumClass}/>
+                    <SelectInput labelText='Category:' htmlName='category' value={category} setValue={setCategory} options={categoryOptions}/>
+                    <TextInput labelText='Description:' htmlName='description' value={description} setValue={setDescription} nameClass={descriptionClass} setNameClass={setDescriptionClass}/>
+                    <SelectInput labelText='Month:' htmlName='month' value={month} setValue={setMonth} options={monthOptions}/>
+                    <SelectInput labelText='Year:' htmlName='year' value={year} setValue={setYear} options={yearOptions}/>
+                    <ButtonInput buttonText='Add Cost' onClick={handleClick}/>
                     <LogBox value={log}/>
                 </div>
             </div>
