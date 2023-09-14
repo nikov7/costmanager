@@ -6,7 +6,7 @@ import Notifier from './components/notifier';
 /* global idb */
 
 
-export const NotifyContext = createContext((title, text)=>void 0);
+export const NotifyContext = createContext((_, __)=>void 0);
 
 function App() {
 
