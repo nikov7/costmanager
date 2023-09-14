@@ -3,6 +3,7 @@ import {useState, useContext} from 'react';
 /* global idb */
 
 import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from './inputs';
+import { getYearOptions, getMonthOptions } from "./util";
 
 import {NotifyContext} from '../App';
 
@@ -15,17 +16,8 @@ const categoryOptions = [
     {value: 'OTHER', text:'OTHER'}
 ];
 
-let yearOptions = [];
-
-for (let currYear = 2023; currYear >= 1960; currYear--) {
-    yearOptions.push({ value: currYear.toString(), text: currYear.toString() });
-}
-
-let monthOptions = [];
-
-for (let currMonth = 1; currMonth <= 12; currMonth++) {
-    monthOptions.push({ value: currMonth.toString(), text: currMonth.toString() });
-}
+const yearOptions = getYearOptions();
+const monthOptions = getMonthOptions();
 
 function AddCost() {
     const [sum, setSum] = useState('');

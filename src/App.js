@@ -17,14 +17,11 @@ function App() {
     useEffect(() => {
         const init = async function() {
             idb.db = await idb.openCostsDB('costsdb', 1);
-            console.log(`db:${idb.db}`);
         }
-        console.log('Init once.');
         init();
     }, []);
 
     const createNotification = (title, text) => {
-        console.log(`Adding notification ['${title}', '${text}'], NOTIFICATION_ID: ${idVal}`);
         setNotifications(prevArr => [...prevArr, {id:idVal, title:title, text:text}]);
         setIdVal(prevId => prevId + 1);
     }

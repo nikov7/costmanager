@@ -2,9 +2,14 @@ import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import HistogramChart from './chart';
 import ReportTable from './table';
-import {LogBox, TextInput, ButtonInput} from './inputs';
+import {LogBox, ButtonInput, SelectInput} from './inputs';
+import { getYearOptions, getMonthOptions } from "./util";
 
 /* global idb */
+
+
+const yearOptions = getYearOptions();
+const monthOptions = getMonthOptions();
 
 function ReportMain() {
 
@@ -17,7 +22,7 @@ function ReportMain() {
     const [items, setItems] = useState([]);
     const [data_for_chart, setDataForChart] = useState([]);
     const [search, setSearch] = useState('');
-    const [emptyVal, setEmptyVal] = useState('');
+    //const [emptyVal, setEmptyVal] = useState('');
 
 
     function clearReportItems(){
@@ -94,8 +99,8 @@ function ReportMain() {
         <div className='border p-10 w-100'>
             <h1 className='display-3 m-2'>Get Report</h1>
             <div className='m-2'>
-                <TextInput labelText='Month:' htmlName='month' value={month} setValue={setMonth}/>
-                <TextInput labelText='Year:' htmlName='year' value={year} setValue={setYear}/>
+                <SelectInput labelText='Month:' htmlName='month' value={month} setValue={setMonth} options={monthOptions}/>
+                <SelectInput labelText='Year:' htmlName='year' value={year} setValue={setYear} options={yearOptions}/>
                 <ButtonInput onClick={handleClick} buttonText={'Get Report'}/>
                 <div>
                     <LogBox value={search}/>
