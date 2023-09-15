@@ -1,5 +1,13 @@
+/*
+    Nikita Vinnik 312535529
+    Bar Salem 207351784
+    Netanel Aharoni 312541576
+*/
+
+// idb namespace
 const idb = {};
 
+// Constructor function to set the current database instance
 idb.Database = function(db) {
     let _db = db;
 
@@ -8,6 +16,7 @@ idb.Database = function(db) {
     }
 }
 
+// Add a cost entry to the database
 idb.Database.prototype.addCost = function(cost) {
 
     return new Promise((resolve, reject) => {
@@ -27,6 +36,7 @@ idb.Database.prototype.addCost = function(cost) {
     });
 };
 
+// Open the costs database with the given name and version
 idb.openCostsDB = function(name, version) {
     return new Promise((resolve, reject) => {
 

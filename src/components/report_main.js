@@ -1,15 +1,17 @@
+/*
+    Nikita Vinnik 312535529
+    Bar Salem 207351784
+    Netanel Aharoni 312541576
+*/
+
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import HistogramChart from './chart';
 import ReportTable from './table';
-import {LogBox, ButtonInput, SelectInput} from './inputs';
-import { getYearOptions, getMonthOptions } from "./util";
+import {LogBox, ButtonInput, TextInput} from './inputs';
 
 /* global idb */
 
-
-const yearOptions = getYearOptions();
-const monthOptions = getMonthOptions();
 
 function ReportMain() {
 
@@ -22,14 +24,16 @@ function ReportMain() {
     const [items, setItems] = useState([]);
     const [data_for_chart, setDataForChart] = useState([]);
     const [search, setSearch] = useState('');
-    //const [emptyVal, setEmptyVal] = useState('');
-
 
     function clearReportItems(){
         setItems([])
         setDataForChart([])
     }
 
+    /*
+    Check if the item in database should be reported. this function covers all the following cases (filters):
+    Empty query (show all records), By Month, By Year, By Month and year (edited)
+     */
     function shouldReportItem(cursor_val){
         const onlyMonth = cursor_val.month === monthNum && yearNum === 0
         const onlyYear = cursor_val.year === yearNum && monthNum === 0
@@ -38,6 +42,7 @@ function ReportMain() {
         return onlyYear || onlyMonth || emptyQuery || specificQuery
     }
 
+    // Show relevant log depending on the search
     function getSummaryTitle(){
         if (!monthNum && !yearNum) return `'Cost Summary' for all history:`
         if (yearNum && !monthNum) return `'Cost Summary' for Year: ${yearNum}`
@@ -45,6 +50,7 @@ function ReportMain() {
         if (monthNum && yearNum) return `'Cost Summary' for Month: ${monthNum} and Year: ${yearNum}`
     }
 
+    // Function is called when 'Get Report' button is pressed
     function handleClick() {
         let item = [];
         let chartData = [
@@ -55,21 +61,35 @@ function ReportMain() {
             { sum: 0, category: 'HOUSING' },
             { sum: 0, category: 'OTHER' },
         ];
+        // Accessing the idb costs object store
         let objectStore = idb.db.getDB().transaction(['costs'], 'readonly').objectStore('costs');
+
+        // Opening the cursor
         let cursorObject = objectStore.openCursor();
-        clearReportItems()
+
+        // Clears the previous query records (table and chart)
+        clearReportItems();
+
+        // Iterate through the cursor
         cursorObject.onsuccess = (event) => {
+
+            // Get the current record
             const cursor = event.target.result;
-            console.log(typeof monthNum, typeof yearNum)
+
+            // If there is still a record left
             if (cursor) {
                 const val = cursor.value;
+
+                // Check if the record should be displayed
                 if (shouldReportItem(val)) {
-                    console.log(`Matching : ${val.sum}, key: ${cursor.key}`);
+
+                    // Sum all records that belong to the same category
                     for (const chartItem of chartData) {
                         if (chartItem.category === val.category) {
                             chartItem.sum += val.sum;
                         }
                     }
+                    // Store the record
                     item.push(
                         <tr key={cursor.key}>
                             <td>{val.sum}</td>
@@ -80,18 +100,19 @@ function ReportMain() {
                         </tr>
                     );
                 }
+
+                // Move to the next record
                 cursor.continue();
-            }
-            else {
+            } else {
+
+                // If any records were found, display the results
                 if (item.length) {
                     setSearch(getSummaryTitle());
                     setItems(item);
                     setDataForChart(chartData);
-                }
-                else{
+                } else {
                     setSearch(`No Costs yet for the dates you mentioned`);
                 }
-
             }
         };
     }
@@ -99,8 +120,8 @@ function ReportMain() {
         <div className='border p-10 w-100'>
             <h1 className='display-3 m-2'>Get Report</h1>
             <div className='m-2'>
-                <SelectInput labelText='Month:' htmlName='month' value={month} setValue={setMonth} options={monthOptions}/>
-                <SelectInput labelText='Year:' htmlName='year' value={year} setValue={setYear} options={yearOptions}/>
+                <TextInput labelText="Month:" htmlName="month" value={month} setValue={setMonth}/>
+                <TextInput labelText="Year:" htmlName="year" value={year} setValue={setYear}/>
                 <ButtonInput onClick={handleClick} buttonText={'Get Report'}/>
                 <div>
                     <LogBox value={search}/>

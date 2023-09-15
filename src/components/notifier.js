@@ -1,6 +1,13 @@
+/*
+    Nikita Vinnik 312535529
+    Bar Salem 207351784
+    Netanel Aharoni 312541576
+*/
+
 import {useEffect, useRef} from 'react';
 import {Toast} from 'bootstrap';
 
+// Main notifier, generates notifications
 function Notifier({notifications, notifierCallback}) {
     return (
         <div className='toast-container position-absolute m-2' style={{top:0, right:0}}>
@@ -19,6 +26,7 @@ function Notifier({notifications, notifierCallback}) {
     );
 }
 
+// Notification component with fade out
 function Notification({id, title, text, callBack}) {
     const toastRef = useRef();
 
@@ -50,7 +58,6 @@ function Notification({id, title, text, callBack}) {
             </div>
         </div>
     );
-
 }
 
 export default Notifier;

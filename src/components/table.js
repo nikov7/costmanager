@@ -1,5 +1,12 @@
+/*
+    Nikita Vinnik 312535529
+    Bar Salem 207351784
+    Netanel Aharoni 312541576
+*/
+
 import Table from 'react-bootstrap/Table';
 
+// Component to display data in a tabular format
 function ReportTable({ table_items }) {
     return (
         <Table striped bordered hover variant='dark'>

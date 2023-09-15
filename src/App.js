@@ -1,3 +1,9 @@
+/*
+    Nikita Vinnik 312535529
+    Bar Salem 207351784
+    Netanel Aharoni 312541576
+ */
+
 import {createContext, useCallback, useEffect, useState} from 'react';
 import AddCost from './components/cost_main';
 import ReportMain from './components/report_main';

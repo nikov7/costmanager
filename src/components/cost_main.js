@@ -1,12 +1,18 @@
+/*
+    Nikita Vinnik 312535529
+    Bar Salem 207351784
+    Netanel Aharoni 312541576
+*/
+
 import {useState, useContext} from 'react';
+import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from './inputs';
+import { getYearOptions, getMonthOptions } from "./util";
+import {NotifyContext} from '../App';
 
 /* global idb */
 
-import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from './inputs';
-import { getYearOptions, getMonthOptions } from "./util";
 
-import {NotifyContext} from '../App';
-
+// Define options for the category dropdown
 const categoryOptions = [
     {value: 'FOOD', text:'FOOD'},
     {value: 'HEALTH', text:'HEALTH'},
@@ -16,9 +22,11 @@ const categoryOptions = [
     {value: 'OTHER', text:'OTHER'}
 ];
 
+// define year and month options
 const yearOptions = getYearOptions();
 const monthOptions = getMonthOptions();
 
+// AddCost component for adding a new cost entry
 function AddCost() {
     const [sum, setSum] = useState('');
     const [category, setCategory] = useState('FOOD');
@@ -30,9 +38,7 @@ function AddCost() {
     const [sumClass, setSumClass] = useState('form-control');
     const [descriptionClass, setDescriptionClass] = useState('form-control');
 
-
     const createNotification = useContext(NotifyContext);
-
 
     const handleClick = () => {
         // Check for missing inputs (sum & description are required)
@@ -47,27 +53,25 @@ function AddCost() {
             return;
         }
 
-        setLog(`Added: sum:${sum}, category: ${category}, description:${description}`);
+        // Create a cost object that will be sent to the database
         const cost = {
-            sum:+sum, category:category, description:description
+            sum:+sum, category:category, description:description, month: +month, year: +year
         }
 
-        cost.month = +month;
-        cost.year = +year;
         setLog(`Added: sum:${sum}, category: ${category}, description:${description}, month:${month}, year:${year}`);
 
-
+        // create a notification on the top right corner
         if (createNotification != null) {
             createNotification('Added', `Sum: ${sum}, Category: ${category}, Description:${description}`);
         }
 
+        // Add the cost object to the database
         idb.db.addCost(cost);
     }
 
     return (
         <div>
             <div className='border p-10 w-100 mb-3'>
-
                 <h1 className='display-3 m-2'>Add Cost</h1>
                 <div className='m-2'>
                     <NumberInput labelText='Sum:' htmlName='sum' value={sum} setValue={setSum} nameClass={sumClass} setNameClass={setSumClass}/>

@@ -1,3 +1,11 @@
+/*
+    Nikita Vinnik 312535529
+    Bar Salem 207351784
+    Netanel Aharoni 312541576
+*/
+
+
+// Component for handling numeric inputs
 export function NumberInput({labelText, htmlName, value, setValue, nameClass='form-control', setNameClass}) {
     return (
         <div className='mb-3 w-50'>
@@ -5,6 +13,7 @@ export function NumberInput({labelText, htmlName, value, setValue, nameClass='fo
             <input type='text' className={nameClass} name={htmlName} id={htmlName}
                    value={value}
                    onChange={e=> {
+                       // replaces non numeric characters with empty space
                        const val = e.target.value.replace(/\D/g, "");
                        setValue(val);
                        // Will cancel red borders when input is valid
@@ -20,6 +29,7 @@ export function NumberInput({labelText, htmlName, value, setValue, nameClass='fo
     );
 }
 
+// Component for handling text inputs
 export function TextInput({labelText, htmlName, value, setValue, nameClass='form-control', setNameClass= e=> {}}) {
     return (
         <div className='mb-3 w-50'>
@@ -42,6 +52,7 @@ export function TextInput({labelText, htmlName, value, setValue, nameClass='form
     );
 }
 
+// Component for handling dropdown inputs
 export function SelectInput({labelText, htmlName, value, setValue, options}) {
     return (
         <div className='mb-3 w-50'>
@@ -57,6 +68,7 @@ export function SelectInput({labelText, htmlName, value, setValue, options}) {
     );
 }
 
+// Component for rendering buttons
 export function ButtonInput({buttonText, onClick}) {
     return (
         <div className='mb-3'>
@@ -67,6 +79,7 @@ export function ButtonInput({buttonText, onClick}) {
     );
 }
 
+// Component for displaying the log box
 export function LogBox({value}) {
     return (
         <div className='log-box'>
