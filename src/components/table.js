@@ -7,7 +7,7 @@
 import Table from 'react-bootstrap/Table';
 
 // Component to display data in a tabular format
-function ReportTable({ table_items }) {
+function ReportTable({ tableItems }) {
     return (
         <Table striped bordered hover variant='dark'>
             <thead>
@@ -19,7 +19,7 @@ function ReportTable({ table_items }) {
                 <th>Year</th>
             </tr>
             </thead>
-            <tbody>{table_items}</tbody>
+            <tbody>{tableItems}</tbody>
         </Table>
     );
 }

@@ -14,10 +14,12 @@ import Notifier from './components/notifier';
 /* global idb */
 
 
+//
 export const NotifyContext = createContext((_, __)=>void 0);
 
 function App() {
 
+    // holds notification list and incrementing ids
     const [notifications, setNotifications] = useState([]);
     const [idVal, setIdVal] = useState(0);
 

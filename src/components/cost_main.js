@@ -38,6 +38,7 @@ function AddCost() {
     const [sumClass, setSumClass] = useState('form-control');
     const [descriptionClass, setDescriptionClass] = useState('form-control');
 
+    // retrieve notification function from context
     const createNotification = useContext(NotifyContext);
 
     const handleClick = () => {

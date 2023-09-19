@@ -21,7 +21,7 @@ function ReportMain() {
     const yearNum = Number(year);
 
     const [items, setItems] = useState([]);
-    const [data_for_chart, setDataForChart] = useState([]);
+    const [dataForChart, setDataForChart] = useState([]);
     const [search, setSearch] = useState('');
 
     // Function to clear previous records
@@ -34,11 +34,11 @@ function ReportMain() {
     Check if the item in database should be reported. this function covers all the following cases (filters):
     Empty query (show all records), By Month, By Year, By Month and year (edited)
      */
-    function shouldReportItem(cursor_val){
-        const onlyMonth = cursor_val.month === monthNum && yearNum === 0
-        const onlyYear = cursor_val.year === yearNum && monthNum === 0
+    function shouldReportItem(cursorVal){
+        const onlyMonth = cursorVal.month === monthNum && yearNum === 0
+        const onlyYear = cursorVal.year === yearNum && monthNum === 0
         const emptyQuery = !monthNum && !yearNum
-        const specificQuery = cursor_val.year === yearNum && cursor_val.month === monthNum
+        const specificQuery = cursorVal.year === yearNum && cursorVal.month === monthNum
         return onlyYear || onlyMonth || emptyQuery || specificQuery
     }
 
@@ -125,8 +125,8 @@ function ReportMain() {
                 <ButtonInput onClick={handleClick} buttonText={'Get Report'}/>
                 <div>
                     <LogBox value={search}/>
-                    <ReportTable table_items={items} />
-                    <HistogramChart data={data_for_chart}/>
+                    <ReportTable tableItems={items} />
+                    <HistogramChart data={dataForChart}/>
                 </div>
             </div>
         </div>
