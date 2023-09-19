@@ -111,7 +111,7 @@ function ReportMain() {
                     setItems(item);
                     setDataForChart(chartData);
                 } else {
-                    setSearch(`No Costs yet for the dates you mentioned`);
+                    setSearch(`No costs yet for the dates you mentioned`);
                 }
             }
         };
@@ -120,8 +120,8 @@ function ReportMain() {
         <div className='border p-10 w-100'>
             <h1 className='display-3 m-2'>Get Report</h1>
             <div className='m-2'>
-                <TextInput labelText="Month:" htmlName="month" value={month} setValue={setMonth}/>
-                <TextInput labelText="Year:" htmlName="year" value={year} setValue={setYear}/>
+                <TextInput labelText='Month:' htmlName='month' value={month} setValue={setMonth}/>
+                <TextInput labelText='Year:' htmlName='year' value={year} setValue={setYear}/>
                 <ButtonInput onClick={handleClick} buttonText={'Get Report'}/>
                 <div>
                     <LogBox value={search}/>

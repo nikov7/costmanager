@@ -6,7 +6,7 @@
 
 import {useState, useContext} from 'react';
 import {NumberInput, TextInput, SelectInput, ButtonInput, LogBox } from './inputs';
-import { getYearOptions, getMonthOptions } from "./util";
+import { getYearOptions, getMonthOptions } from './util';
 import {NotifyContext} from '../App';
 
 /* global idb */
@@ -59,7 +59,7 @@ function AddCost() {
             sum:+sum, category:category, description:description, month: +month, year: +year
         }
 
-        setLog(`Added: sum:${sum}, category: ${category}, description:${description}, month:${month}, year:${year}`);
+        setLog(`Added: sum:${sum}, category:${category}, description:${description}, month:${month}, year:${year}`);
 
         // create a notification on the top right corner
         if (createNotification != null) {
