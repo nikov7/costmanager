@@ -5,6 +5,8 @@
  */
 
 import {createContext, useCallback, useEffect, useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import './App.css';
 import AddCost from './components/cost_main';
 import ReportMain from './components/report_main';
 import Notifier from './components/notifier';

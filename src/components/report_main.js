@@ -5,7 +5,6 @@
 */
 
 import {useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import HistogramChart from './chart';
 import ReportTable from './table';
 import {LogBox, ButtonInput, TextInput} from './inputs';
