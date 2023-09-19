@@ -30,19 +30,30 @@ function Notifier({notifications, notifierCallback}) {
 function Notification({id, title, text, callBack}) {
     const toastRef = useRef();
 
+    // Specify the notification timeout
     const NOTIFY_TIMEOUT = 3000;
 
     useEffect(() => {
+
+        // get the reference
         let myToast = toastRef.current;
+
+        // grab toast instance
         let toast = Toast.getInstance(myToast);
 
+        // instance doesn't exist
         if (!toast) {
+
+            // create Toast from the reference and display it
             toast = new Toast(myToast, {autohide: false});
             toast.show();
 
-            // can make deletion time a variable and not constant
+
+            // hide and destroy notification after timeout
             setTimeout(() => {
                 toast.hide();
+
+                // destroy notification
                 callBack(id);
             }, NOTIFY_TIMEOUT);
         }
