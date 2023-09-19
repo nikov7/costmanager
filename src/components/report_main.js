@@ -24,6 +24,7 @@ function ReportMain() {
     const [data_for_chart, setDataForChart] = useState([]);
     const [search, setSearch] = useState('');
 
+    // Function to clear previous records
     function clearReportItems(){
         setItems([])
         setDataForChart([])

@@ -29,11 +29,14 @@ function App() {
         init();
     }, []);
 
+
+    // Notification function called by components inside the notify context
     const createNotification = (title, text) => {
         setNotifications(prevArr => [...prevArr, {id:idVal, title:title, text:text}]);
         setIdVal(prevId => prevId + 1);
     }
 
+    // Callback function to delete an expired notification
     const notifierCallback = useCallback((id) => {
         setNotifications((currentNotifications) =>
             currentNotifications.filter((item) => item.id !== id)
